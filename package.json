@@ -1,0 +1,17 @@
+{
+  "name": "cannigrow",
+  "version": "1.0.0",
+  "description": "Dog`s Fresh Food",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Hany Fareed",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.0"
+  }
+}
