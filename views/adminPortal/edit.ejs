@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">        
+    <head>        
+        <meta charset="UTF-8">        
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">        
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">        
+        <title>edit product</title>        
+        <link rel="stylesheet" href="css/style.css">        
+        <link rel="stylesheet" href="css/bootstrap.min.css">        
+        <link rel="stylesheet" href="css/bootstrap-icons.css">        
+        <link rel="icon" href="css/bootstrap-icons.css">        
+    </head>        
+    <body>    
+        <div class="container">Edit Product
+
+            <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">Add Product</h1>
+        </div>
+        <form ACTION="/edit" method="put" class="row g-3">
+           <div class="col-md-1">
+            <label for="inputEmail4" class="form-label">ID</label>
+            <input
+              name="id"
+              type="text"
+              class="form-control"
+              id="inputEmail4"
+              value="<%= product.id %>"
+            />
+          </div>
+          <div class="col-md-9">
+            <label for="inputEmail4" class="form-label">Product Name</label>
+            <input
+              name="name"
+              type="text"
+              class="form-control"
+              id="inputEmail4"
+              value="<%= product.name %>"
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="inputPassword4" class="form-label">Product Price</label>
+            <input
+              name="price"
+              type="text"
+              class="form-control"
+              id="inputPassword4"
+              value="<%= product.price %>"
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label"
+              >Product Description</label
+            >
+            <input
+              name="description"
+              type="text"
+              class="form-control"
+              id="inputAddress"
+              placeholder="1234 Main St"
+              value="<%= product.description %>"
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Product Image</label>
+            <input
+              name="image"
+              type="text"
+              class="form-control"
+              id="inputAddress2"
+              placeholder="Apartment, studio, or floor"
+              value="<%= product.image %>"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Product Category</label>
+            <input
+              name="category"
+              type="text"
+              class="form-control"
+              id="inputCity"
+              value="<%= product.category %>"
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label">Product Quantity</label>
+            <input
+              name="quantity"
+              type="text"
+              class="form-control"
+              id="inputState"
+              value="<%= product.quantity %>"
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="inputZip" class="form-label">Product Status</label>
+            <input
+              name="status"
+              type="text"
+              class="form-control"
+              id="inputZip"
+              value="<%= product.status %>"
+            />
+          </div>
+          <div class="col-12">
+            <button type="update" class="btn btn-primary">update</button>
+          </div>
+        </form>
+      </div>
+        </div>
+
+        
+       </body>
+</html>

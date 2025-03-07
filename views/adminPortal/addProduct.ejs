@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css" />
+    <link rel="stylesheet" href="css/bootstrap-icons.css" />
+    <link rel="icon" href="css/bootstrap-icons.css" />
+  </head>
+  <body>
+    <script>
+        async function updateUser(id, field, value) {
+            try {
+                const response = await fetch('/update', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ id, field, value })
+                });
+                if (!response.ok) throw new Error('فشل في تحديث البيانات');
+                console.log('تم التحديث بنجاح!');
+                alert('تم التحديث بنجاح!');
+            } catch (error) {
+                console.error(error);
+                alert('حدث خطأ أثناء تحديث البيانات');
+            }
+        }
+    </script>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="text-center">Add Product</h1>
+        </div>
+        <form ACTION="/addproduct" method="post" class="row g-3">
+           <div class="col-md-1">
+            <label for="inputEmail4" class="form-label">ID</label>
+            <input
+              name="id"
+              type="text"
+              class="form-control"
+              id="inputEmail4"
+            />
+          </div>
+          <div class="col-md-9">
+            <label for="inputEmail4" class="form-label">Product Name</label>
+            <input
+              name="name"
+              type="text"
+              class="form-control"
+              id="inputEmail4"
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="inputPassword4" class="form-label">Product Price</label>
+            <input
+              name="price"
+              type="text"
+              class="form-control"
+              id="inputPassword4"
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress" class="form-label"
+              >Product Description</label
+            >
+            <input
+              name="description"
+              type="text"
+              class="form-control"
+              id="inputAddress"
+              placeholder="1234 Main St"
+            />
+          </div>
+          <div class="col-12">
+            <label for="inputAddress2" class="form-label">Product Image</label>
+            <input
+              name="image"
+              type="text"
+              class="form-control"
+              id="inputAddress2"
+              placeholder="Apartment, studio, or floor"
+            />
+          </div>
+          <div class="col-md-6">
+            <label for="inputCity" class="form-label">Product Category</label>
+            <input
+              name="category"
+              type="text"
+              class="form-control"
+              id="inputCity"
+            />
+          </div>
+          <div class="col-md-4">
+            <label for="inputState" class="form-label">Product Quantity</label>
+            <input
+              name="quantity"
+              type="text"
+              class="form-control"
+              id="inputState"
+            />
+          </div>
+          <div class="col-md-2">
+            <label for="inputZip" class="form-label">Product Status</label>
+            <input
+              name="status"
+              type="text"
+              class="form-control"
+              id="inputZip"
+            />
+          </div>
+          <div class="col-12">
+            <button type="submit" class="btn btn-primary">Add Product</button>
+          </div>
+        </form>
+      </div>
+      <hr>
+     <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">ID</th>
+      <th scope="col">Product name</th>
+      <th scope="col">price</th>
+      <th scope="col">description</th>
+      <th scope="col">image</th>
+      <th scope="col">category</th>
+      <th scope="col">quantity</th>
+      <th scope="col">status</th>
+    </tr>
+  </thead>
+  <tbody class="table-group-divider">
+   
+     <% prod.forEach(product => { %>
+    
+            <tr>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'id', this.innerText)"><%= product.id %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'name', this.innerText)"><%= product.name %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'price', this.innerText)"><%= product.price %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'description', this.innerText)"><%= product.description %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'image', this.innerText)"><%= product.image %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'category', this.innerText)"><%= product.category %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'quantity', this.innerText)"><%= product.quantity %></td>
+                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'status', this.innerText)"><%= product.status %></td>
+                <td>
+                   
+                     <a href="/edit/<%= product._id %>">
+                <button style="background-color: blue; color: white;">✏️ تعديل</button>
+            </a>
+            <form action="/delete/<%= product._id %>" method="POST" style="display:inline;">
+                <button type="submit" style="background-color: red; color: white;" onclick="return confirm('هل أنت متأكد؟')">❌ حذف</button>
+            </form>
+                </td>
+            </tr>
+        <% }); %>
+    
+  </tbody>
+</table>
+    </div>
+    
+  </body>
+</html>

@@ -4,13 +4,17 @@
   "description": "Dog`s Fresh Food",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node ./bin/www",
+    "dev": "nodemon ./bin/www",
+    "watch": "nodemon --ext"
   },
   "author": "Hany Fareed",
   "license": "ISC",
   "dependencies": {
+    "connect-livereload": "^0.6.1",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
+    "livereload": "^0.9.3",
     "mongodb": "^6.14.1",
     "mongoose": "^8.12.0",
     "nodemon": "^3.1.9"
