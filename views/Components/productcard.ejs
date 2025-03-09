@@ -1,0 +1,38 @@
+<div class="product-card">
+    <img src="<%= product.image %>" alt="<%= product.name %>">
+    <h2> test <%= product.name %></h2>
+    <p><%= product.description %></p>
+    <span class="price">$<%= product.price %></span>
+    <button>Add to Cart</button>
+</div>
+
+<style>
+    .product-card {
+        width: 250px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 16px;
+        text-align: center;
+        box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+    }
+    .product-card img {
+        width: 100%;
+        border-radius: 8px;
+    }
+    .product-card .price {
+        font-size: 18px;
+        color: green;
+        font-weight: bold;
+    }
+    .product-card button {
+        background: #28a745;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+    .product-card button:hover {
+        background: #218838;
+    }
+</style>

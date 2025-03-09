@@ -1,15 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
+require("dotenv").config();
 const app = express();
-const port = 3000;
+const port = process.env.PORT 
 app.use(express.static("public"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+ 
 app.set('view engine', 'ejs');
 
 const connstring =
-  "mongodb+srv://hanyfareed75:8j5pWGdSizQl9cnw@cluster0.eogch.mongodb.net/all-data?retryWrites=true&w=majority&appName=Cluster0";
+  process.env.DB_URL ;
 const productSchema = require("./models/productSchm");
 
 mongoose
@@ -36,6 +37,11 @@ lrserver.server.once("connection", () => {
 
 app.get("/", (req, res) => {
   res.render("index");
+});
+app.get("/productsview", async (req, res) => {
+  const products = await productSchema.find();
+  
+  res.render("products/productsview",{products:products});
 });
 app.get("/addProduct", async (req, res) => {
    const products = await productSchema.find();

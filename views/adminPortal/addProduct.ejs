@@ -9,6 +9,12 @@
     <link rel="stylesheet" href="css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/bootstrap-icons.css" />
     <link rel="icon" href="css/bootstrap-icons.css" />
+    <!-- Toastr CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
+<!-- jQuery and Toastr JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
   </head>
   <body>
     <script>
@@ -21,7 +27,7 @@
                 });
                 if (!response.ok) throw new Error('فشل في تحديث البيانات');
                 console.log('تم التحديث بنجاح!');
-                alert('تم التحديث بنجاح!');
+                toastr.success('Upadate! {0}', 'Success').replace('{0}', field);
             } catch (error) {
                 console.error(error);
                 alert('حدث خطأ أثناء تحديث البيانات');
