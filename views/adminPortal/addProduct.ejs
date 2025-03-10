@@ -125,7 +125,7 @@
      <table class="table">
   <thead>
     <tr>
-      <th scope="col">ID</th>
+       
       <th scope="col">Product name</th>
       <th scope="col">price</th>
       <th scope="col">description</th>
@@ -140,22 +140,23 @@
      <% prod.forEach(product => { %>
     
             <tr>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'id', this.innerText)"><%= product.id %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'name', this.innerText)"><%= product.name %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'price', this.innerText)"><%= product.price %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'description', this.innerText)"><%= product.description %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'image', this.innerText)"><%= product.image %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'category', this.innerText)"><%= product.category %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'quantity', this.innerText)"><%= product.quantity %></td>
-                <td contenteditable="true" onblur="updateUser('<%= product._id %>', 'status', this.innerText)"><%= product.status %></td>
+                
+                <td  ><%= product.name %></td>
+                <td  ><%= product.price %></td>
+                <td  ><%= product.description %></td>
+                <td  class="text-nowrap col-2 text-truncate " ><%= product.image %></td>
+                <td  ><%= product.category %></td>
+                <td  ><%= product.quantity %></td>
+                <td  ><%= product.status %></td>
                 <td>
-                   
+                   <div class="btn-group " role="group" aria-label="Basic mixed styles example">
                      <a href="/edit/<%= product._id %>">
                 <button style="background-color: blue; color: white;">✏️ تعديل</button>
             </a>
             <form action="/delete/<%= product._id %>" method="POST" style="display:inline;">
                 <button type="submit" style="background-color: red; color: white;" onclick="return confirm('هل أنت متأكد؟')">❌ حذف</button>
             </form>
+            </div>
                 </td>
             </tr>
         <% }); %>

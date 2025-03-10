@@ -3,16 +3,21 @@ const mongoose = require("mongoose");
 require("dotenv").config();
 const app = express();
 const port = process.env.PORT 
+const connstring = process.env.DB_URL;
+const productSchema = require("./models/productSchm");
+const path = require("path");
+var methodOverride = require("method-override");
+
 app.use(express.static("public"));
+app.set("views", "./views");
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
- 
+app.use(methodOverride("_method"));
+
 app.set('view engine', 'ejs');
 
-const connstring =
-  process.env.DB_URL ;
-const productSchema = require("./models/productSchm");
 
+//Connect to DB
 mongoose
   .connect(connstring)
   .then(() => {
@@ -24,8 +29,9 @@ mongoose
   .catch((err) => console.log(err));
 
 //live reload 
-const path  = require("path");
+
 const liveReload = require("livereload");
+const { render } = require("ejs");
 const lrserver = liveReload.createServer();
 lrserver.watch(path.join(__dirname, "public"));
 lrserver.server.once("connection", () => {
@@ -34,15 +40,17 @@ lrserver.server.once("connection", () => {
   }, 100);
 });
 
-
+//Home
 app.get("/", (req, res) => {
   res.render("index");
 });
+//Products
 app.get("/productsview", async (req, res) => {
   const products = await productSchema.find();
   
   res.render("products/productsview",{products:products});
 });
+//add product
 app.get("/addProduct", async (req, res) => {
    const products = await productSchema.find();
   res.render("adminPortal/addProduct", { title: "Add Product",prod: products });
@@ -59,36 +67,25 @@ app.post("/delete/:id", async (req, res) => {
   await productSchema.findByIdAndDelete(req.params.id);
   res.redirect("/addProduct");
 });
-app.get("/products", async (req, res) => {
-  const products = await productSchema.find();
-  res.json(products);
-  console.log(products);
+
+app.get("/edit/:id", async (req, res) => {
+  const { id } = req.params;
+  const product = await productSchema.findById(id);
+  res.render("adminPortal/edit", { title: "Edit Product", product });
 });
+
 app.put("/edit/:id", async (req, res) => {
-  await productSchema.findByIdAndUpdate(req.body.id, {
-    name: req.body.name,
-    price: req.body.price,
-    description: req.body.description,
-    image: req.body.image,
-    category: req.body.category,
-    quantity: req.body.quantity ,
-    status: req.body.status
-  });
+  const { id } = req.params;
+  await productSchema.findByIdAndUpdate(id, req.body);
   res.redirect("/addProduct");
 });
+
 app.get("/product/:id", async (req, res) => {
   const { id } = req.params;
   const product = await productSchema.findById(id);
   res.json(product);
 });
-app.get("/edit/:id",  (req, res) => {
-  const { id } = req.params;
-  const product =  productSchema.findById(id);
-   
-  console.log(req.body);
-  res.render("adminPortal/edit", { product });
 
-});
 
 app.delete("/product/:id", async (req, res) => {  
   const { id } = req.params;

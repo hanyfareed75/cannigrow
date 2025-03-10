@@ -17,7 +17,7 @@
         <div class="col-12">
           <h1 class="text-center">Add Product</h1>
         </div>
-        <form ACTION="/edit" method="put" class="row g-3">
+        <form ACTION="/edit/<%= product.id %>?_method=PUT" method="post" class="row g-3">
            <div class="col-md-1">
             <label for="inputEmail4" class="form-label">ID</label>
             <input
