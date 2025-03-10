@@ -40,15 +40,7 @@
           <h1 class="text-center">Add Product</h1>
         </div>
         <form ACTION="/addproduct" method="post" class="row g-3">
-           <div class="col-md-1">
-            <label for="inputEmail4" class="form-label">ID</label>
-            <input
-              name="id"
-              type="text"
-              class="form-control"
-              id="inputEmail4"
-            />
-          </div>
+           
           <div class="col-md-9">
             <label for="inputEmail4" class="form-label">Product Name</label>
             <input
@@ -151,10 +143,10 @@
                 <td>
                    <div class="btn-group " role="group" aria-label="Basic mixed styles example">
                      <a href="/edit/<%= product._id %>">
-                <button style="background-color: blue; color: white;">✏️ تعديل</button>
+                <button style="background-color: blue; color: white; height: 48px; border-radius: 20%;" type="button">✏️ Modify</button>
             </a>
             <form action="/delete/<%= product._id %>" method="POST" style="display:inline;">
-                <button type="submit" style="background-color: red; color: white;" onclick="return confirm('هل أنت متأكد؟')">❌ حذف</button>
+                <button type="submit" style="background-color: red; color: white;height: 48px; border-radius: 20%;" onclick="return confirm('هل أنت متأكد؟')">❌ Delete</button>
             </form>
             </div>
                 </td>
