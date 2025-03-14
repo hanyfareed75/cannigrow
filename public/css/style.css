@@ -1,7 +1,14 @@
 
-  
+  .dark-mode{
+    background-image: radial-gradient(circle, #5c0067 0%, #00d4ff 100%);
+    color: white;
+  }
   td[contenteditable="true"] { background-color: #fff8c6; }
-
+#darkModeToggle {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+}
 table {
   table-layout: fixed;
 }
@@ -36,9 +43,6 @@ table {
       padding-bottom: auto;
   }
 
-  .navbar-brand {
-      font-size:    3.5rem;
-      height: 3.5rem;
-  }
+  
   
   

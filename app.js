@@ -5,31 +5,34 @@ const session = require("express-session");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const mongoose = require("mongoose");
-
 const MongoStore = require("connect-mongo");
 const app = express();
+app.use(express.static("public"));
+const cookieParser = require("cookie-parser");
 const port = process.env.PORT;
 const connstring = process.env.DB_URL;
 
 const userSchema = require("./models/userSchm");
 
-const path = require("path");
 
 
+//Routers
 const allRoutes = require("./routes/allRoutes");
 const productRoutes = require("./routes/productRoutes");
 const custProfile = require("./routes/customerRoutes");
+const authRouter = require("./routes/authRouter");
 
-var methodOverride = require("method-override");
+let methodOverride = require("method-override");
 
-app.use(express.static("public"));
+
 app.set("views", "./views");
 
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.set("view engine", "ejs");
-
+app.use(express.json());
+app.use(cookieParser());
 //Connect to DB
 mongoose
   .connect(connstring)
@@ -41,18 +44,7 @@ mongoose
   })
   .catch((err) => console.log(err));
 
-//live reload
 
-const liveReload = require("livereload");
-const { render } = require("ejs");
-const { all } = require("./routes/allRoutes");
-const lrserver = liveReload.createServer();
-lrserver.watch(path.join(__dirname, "public"));
-lrserver.server.once("connection", () => {
-  setTimeout(() => {
-    lrserver.refresh("/");
-  }, 100);
-});
 
 // **إعداد الجلسات باستخدام MongoDB**
 app.use(
@@ -60,6 +52,7 @@ app.use(
     secret: "your_secret_key",
     resave: false,
     saveUninitialized: false,
+     cookie: { secure: false },
     store: MongoStore.create({ mongoUrl: connstring }),
   })
 );
@@ -74,6 +67,8 @@ passport.use(
       clientID: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
       callbackURL: "/auth/google/callback",
+ 
+
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
@@ -110,40 +105,17 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get(
-  "/auth/google",
-  passport.authenticate("google", { scope: ["profile", "email"] })
-);
-
-// المعالجة بعد تسجيل الدخول
-app.get(
-  "/auth/google/callback",
-  passport.authenticate("google", { failureRedirect: "/" }),
-  (req, res) => {
-    res.redirect("/profile");
+app.get("/api/user", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.json({ authenticated: true, user: req.user });
+  } else {
+    res.json({ authenticated: false });
   }
-);
-
-// صفحة الملف الشخصي
-app.get("/profile", (req, res) => {
-  if (!req.isAuthenticated()) {
-    return res.redirect("/");
-  }
-  res.send(`
-        <h1>مرحبًا، ${req.user.displayName}</h1>
-        <img src="${req.user.photo}" width="100" />
-        <p>Email: ${req.user.email}</p>
-        <a href="/logout">تسجيل الخروج</a>
-    `);
 });
 
-// تسجيل الخروج
-app.get("/logout", (req, res) => {
-  req.logout(() => {
-    res.redirect("/");
-  });
-});
+
 
 app.use(allRoutes);
 app.use(productRoutes);
 app.use(custProfile);
+app.use(authRouter);

@@ -6,4 +6,5 @@ const userSchema = new mongoose.Schema({
   photo: String,
 });
 
+
 module.exports = mongoose.model("User", userSchema);

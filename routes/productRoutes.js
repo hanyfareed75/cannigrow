@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const productSchema = require("../models/productSchm");
 const productControllers = require("../controllers/productControllers");
 
 //add product
