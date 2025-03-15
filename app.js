@@ -12,7 +12,7 @@ const cookieParser = require("cookie-parser");
 const port = process.env.PORT;
 const connstring = process.env.DB_URL;
 
-const userSchema = require("./models/userSchm");
+const userSchema = require("./models/User");
 
 
 
@@ -21,10 +21,12 @@ const allRoutes = require("./routes/allRoutes");
 const productRoutes = require("./routes/productRoutes");
 const custProfile = require("./routes/customerRoutes");
 const authRouter = require("./routes/authRouter");
-
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const connectDB = require("./config/database");
+const authRoutes = require("./routes/authRoutes");
 let methodOverride = require("method-override");
-
-
 app.set("views", "./views");
 
 app.use(express.urlencoded({ extended: true }));
@@ -33,6 +35,7 @@ app.use(methodOverride("_method"));
 app.set("view engine", "ejs");
 app.use(express.json());
 app.use(cookieParser());
+
 //Connect to DB
 mongoose
   .connect(connstring)
@@ -113,9 +116,15 @@ app.get("/api/user", (req, res) => {
   }
 });
 
+app.use(cors());
+app.use(bodyParser.json());
+app.use(morgan("dev"));
 
+connectDB();
 
 app.use(allRoutes);
 app.use(productRoutes);
 app.use(custProfile);
 app.use(authRouter);
+app.use("/api/auth", authRoutes);
+module.exports = app;
