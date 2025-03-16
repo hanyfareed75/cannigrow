@@ -64,11 +64,12 @@ router.post("/register", async (req, res) => {
 });
 
 router.post(
-  "/login",
-  passport.authenticate("local", { failureRedirect: "/login" }),
+  "/signin",
+  passport.authenticate("local", { failureRedirect: "/signin" }),
   (req, res) => {
-    res.redirect("/profile");
-    console.log(req.user);
+   
+    res.redirect("/");
+    console.log("this from router signin  "+ req.user);
   }
 );
 
