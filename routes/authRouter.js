@@ -23,23 +23,17 @@ router.get(
 );
 
 // صفحة الملف الشخصي
-router.get("/profile", (req, res) => {
+/* router.get("/profile", (req, res) => {
   if (!req.isAuthenticated()) {
     console.log("not authenticated");
     return res.redirect("/");
   }
-  /* res.send(`
-        <h1>مرحبًا، ${req.user.displayName}</h1>
-        <img src="${req.user.photo}" width="100" />
-        <p>Email: ${req.user.email}</p>
-        <a href="/logout">تسجيل الخروج</a>
-        console.log(req.user);
-    `); */
+  
   res.render("../views/index", {
     username: req.user.displayName,
     photo: req.user.photo,
   });
-});
+}); */
 
 // تسجيل الخروج
 router.get("/logout", (req, res) => {
@@ -56,10 +50,10 @@ router.get("/login", (req, res) => {
   console.log(user);
 });
 
-router.get("/register", (req, res) => {
+/* router.get("/register", (req, res) => {
   res.render("register", { title: "Register" });
   console.log(user);
-});
+}); */
 
 router.post("/register", async (req, res) => {
   const { email, password } = req.body;

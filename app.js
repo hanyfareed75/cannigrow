@@ -1,51 +1,37 @@
 require("dotenv").config();
 const express = require("express");
-
 const session = require("express-session");
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
-const mongoose = require("mongoose");
 const MongoStore = require("connect-mongo");
 const app = express();
-app.use(express.static("public"));
 const cookieParser = require("cookie-parser");
-const port = process.env.PORT;
 const connstring = process.env.DB_URL;
-
 const userSchema = require("./models/User");
+let methodOverride = require("method-override");
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const morgan = require("morgan");
+const connectDB = require("./config/database");
+const authCTRL = require("./controllers/authCTRL");
 
 
+app.use(express.static("public"));
+app.use(express.urlencoded({ extended: true }));
+app.use(methodOverride("_method"));
+
+app.use(cors({ origin: "http://localhost:3000", credentials: true } ));
+app.use(bodyParser.json());
+app.use(morgan("dev"));
+app.use(express.json());
+app.use(cookieParser());
 
 //Routers
 const allRoutes = require("./routes/allRoutes");
 const productRoutes = require("./routes/productRoutes");
 const custProfile = require("./routes/customerRoutes");
 const authRouter = require("./routes/authRouter");
-const cors = require("cors");
-const bodyParser = require("body-parser");
-const morgan = require("morgan");
-const connectDB = require("./config/database");
 const authRoutes = require("./routes/authRoutes");
-let methodOverride = require("method-override");
-app.set("views", "./views");
-
-app.use(express.urlencoded({ extended: true }));
-app.use(methodOverride("_method"));
-
-app.set("view engine", "ejs");
-app.use(express.json());
-app.use(cookieParser());
-
-//Connect to DB
-mongoose
-  .connect(connstring)
-  .then(() => {
-    app.listen(port, () => {
-      console.log(`http://localhost:${port}`);
-    });
-    console.log("Connected to DB");
-  })
-  .catch((err) => console.log(err));
 
 
 
@@ -58,7 +44,7 @@ app.use(
      cookie: { secure: false },
     store: MongoStore.create({ mongoUrl: connstring }),
   })
-);
+); 
 
 // **إعداد Passport**
 app.use(passport.initialize());
@@ -108,17 +94,8 @@ passport.deserializeUser(async (id, done) => {
   }
 });
 
-app.get("/api/user", (req, res) => {
-  if (req.isAuthenticated()) {
-    res.json({ authenticated: true, user: req.user });
-  } else {
-    res.json({ authenticated: false });
-  }
-});
 
-app.use(cors());
-app.use(bodyParser.json());
-app.use(morgan("dev"));
+
 
 connectDB();
 
@@ -127,4 +104,5 @@ app.use(productRoutes);
 app.use(custProfile);
 app.use(authRouter);
 app.use("/api/auth", authRoutes);
+app.use(authRoutes);
 module.exports = app;

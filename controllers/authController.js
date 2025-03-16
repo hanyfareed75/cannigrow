@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const User = require("../models/User");
-
+const users={"email":"yG8aE@example.com","password":"123456"}
 exports.registerUser = async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -17,8 +17,10 @@ exports.registerUser = async (req, res) => {
 exports.loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
-    const user = await User.findOne({ email });
-    if (!user || !(await bcrypt.compare(password, user.password))) {
+   
+    const user = await users.findOne({ email });
+    console.log(user);
+    if (!user || !(await bcrypt.compare(password, users.password))) {
       return res.status(401).json({ message: "بيانات غير صحيحة" });
     }
 
