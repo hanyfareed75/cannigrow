@@ -1,3 +1,5 @@
+import { validatePassword, checkemail } from "./registerForm/registerForm.js";
+
 async function checkAuthStatus() {
   const response = await fetch("/api/user", { credentials: "include" });
   const data = await response.json();
@@ -15,7 +17,7 @@ console.log(data);
         <h2>Welcome ${data.user.displayName}</h2>
         `
   } else {
-    document.getElementById("profile").innerHTML = `<p>User not logged in</p>`;
+  
 
   }
 }
@@ -49,3 +51,40 @@ toggleButton.addEventListener("click", () => {
         
     }
 });
+
+
+
+
+
+
+
+let emailInput = document.getElementById("email");
+let retypeemailInput = document.getElementById("retypeemail");
+
+let passwordInput = document.getElementById("password");
+let confirmpasswordInput = document.getElementById("confirmpassword");
+
+emailInput.addEventListener("change", (data) => {
+
+
+  if (checkemail(data.target.value)) {
+    emailInput.classList.add("is-valid");
+    emailInput.classList.remove("is-invalid");
+  } else {
+    emailInput.classList.add("is-invalid");
+    emailInput.classList.remove("is-valid");
+  }
+});
+
+passwordInput.addEventListener("change", (data) => {
+
+validatePassword(data.target.value);
+});
+
+
+ 
+
+
+// Example Usage
+validatePassword("Test@123"); // ✅ Valid password
+validatePassword("test123");   // ❌ Missing uppercase & special char

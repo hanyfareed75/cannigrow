@@ -6,11 +6,11 @@ const {
   getUserProfile,
 } = require("../controllers/authController");
 const authenticateToken = require("../middlewares/authMiddleware");
-const { route } = require("./allRoutes");
+
 
 const router = express.Router();
 
-router.post("/register", registerUser);
+
 router.post("/login", loginUser);
 router.get("/profile", authenticateToken, getUserProfile);
 router.get("/register", (req, res) => {
@@ -19,7 +19,7 @@ router.get("/register", (req, res) => {
 });
 router.get("/api/user", (req, res) => {
   if (req.isAuthenticated()) {
-    res.json({ authenticated: true, user: req.user , cookies: req.cookies , session: req.session , headers: req.headers , query: req.query, body: req.body , params: req.params , files: req.files , originalUrl: req.originalUrl , protocol: req.protocol , subdomains: req.subdomains , secure: req.secure , ip: req.ip , method: req.method , xhr: req.xhr , baseUrl: req.baseUrl , route: req.route , fresh: req.fresh , stale: req.stale , originalMethod: req.originalMethod, headersSent: req.headersSent  });
+    res.json({ authenticated: true, user: req.user  });
    } else {
     res.json({ authenticated: false });
   }

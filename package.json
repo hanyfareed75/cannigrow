@@ -2,7 +2,7 @@
   "name": "cannigrow",
   "version": "1.0.0",
   "description": "Dog`s Fresh Food",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node ./bin/www",
     "dev": "nodemon ./bin/www",

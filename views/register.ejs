@@ -11,7 +11,7 @@
   <script src="js/jquery-3.3.1.slim.min.js"></script>
   <script src="js/popper.min.js"></script>
   <script src="js/bootstrap.min.js"></script>
-  <script defer src="js/main_script.js"></script>
+  <script type="module" defer src="js/main_script.js"></script>
 
   <!--Styles -->
  
@@ -35,14 +35,31 @@
   
   
   <form action= "/register" method="post" class="row g-3">
+
+    <div class="col-md-6">
+      <label class="form-label">First Name</label>
+      <input name="firstname" type="name" class="form-control" >
+      
+    </div>
+<div class="col-md-6">
+      <label  class="form-label">Last Name</label>
+      <input name="lastname"  type="name" class="form-control">
+      
+    </div>
     <div class="col-md-6">
       <label for="inputEmail4" class="form-label">Email</label>
-      <input type="email" class="form-control" id="inputEmail4">
+      <input name="email" id="email" type="email" class="form-control" id="inputEmail4">
+      <label id="result"></label>
     </div>
+    
+    
+    
     <div class="col-md-6">
-      <label for="inputPassword4" class="form-label">Password</label>
-      <input type="password" class="form-control" id="inputPassword4">
+      <label  for="inputPassword4" class="form-label">Password</label>
+      <input  autocomplete="off" name="password" id="password" type="password" class="form-control" id="inputPassword4">
+      <label id="passwdresult"></label>
     </div>
+     
     <div class="col-12">
       <label for="inputAddress" class="form-label">Address</label>
       <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
@@ -63,8 +80,8 @@
       </select>
     </div>
     <div class="col-md-2">
-      <label for="inputZip" class="form-label">Zip</label>
-      <input type="text" class="form-control" id="inputZip">
+      <label for="inputZip" class="form-label">Mobile Number</label>
+      <input type="number" class="form-control" id="inputZip">
     </div>
     <div class="col-12">
       <div class="form-check">

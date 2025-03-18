@@ -55,13 +55,7 @@ router.get("/login", (req, res) => {
   console.log(user);
 }); */
 
-router.post("/register", async (req, res) => {
-  const { email, password } = req.body;
-  const user = new User({ email, password });
-  await user.save();
-  res.redirect("/login");
-  console.log(user);
-});
+
 
 router.post(
   "/signin",

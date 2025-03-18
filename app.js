@@ -21,7 +21,6 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 app.use(cors({ origin: "http://localhost:3000", credentials: true } ));
-
 app.use(morgan("dev"));
 app.use(express.json());
 app.use(cookieParser());
@@ -34,20 +33,23 @@ const productRoutes = require("./routes/productRoutes");
 const custProfile = require("./routes/customerRoutes");
 const authRouter = require("./routes/authRouter");
 const authRoutes = require("./routes/authRoutes");
+const registerRoutes = require("./routes/registerRoutes");
 
 
 
 
-
+//Google Auth
 authCTRL.googleauth(app,passport,userSchema,GoogleStrategy,session,MongoStore,connstring);
+//Local Auth
 authCTRL.localAuth(app,passport,userSchema,LocalStrategy,session,MongoStore,connstring,bcrypt);
-
+//Connect MongoDB
 connectDB();
-
+//use Routers
 app.use(allRoutes);
 app.use(productRoutes);
 app.use(custProfile);
 app.use(authRouter);
 app.use("/api/auth", authRoutes);
 app.use(authRoutes);
+app.use(registerRoutes);
 module.exports = app;
