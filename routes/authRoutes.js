@@ -11,7 +11,7 @@ const authenticateToken = require("../middlewares/authMiddleware");
 const router = express.Router();
 
 
-router.post("/login", loginUser);
+//router.post("/login", loginUser);
 router.get("/profile", authenticateToken, getUserProfile);
 router.get("/register", (req, res) => {
   console.log("Signup");
