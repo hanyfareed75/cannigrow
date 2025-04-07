@@ -24,12 +24,5 @@ router.get("/api/user", (req, res) => {
     res.json({ authenticated: false });
   }
 });
-router.get("/signin", (req, res) => {
-  
-  res.render("./signin.ejs");
-});
-router.post("/signin", authController.loginUser, (req, res) => {
-  console.log("req.user", req.user);
-  res.render("./signin.ejs");
-});
+
 module.exports = router;

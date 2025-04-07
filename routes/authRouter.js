@@ -57,14 +57,5 @@ router.get("/login", (req, res) => {
 
 
 
-router.post(
-  "/signin",
-  passport.authenticate("local", { failureRedirect: "/signin" }),
-  (req, res) => {
-   
-    res.redirect("/");
-    console.log("this from router signin  "+ req.user);
-  }
-);
 
 module.exports = router;
